@@ -1,8 +1,11 @@
-##Set the working directory where my data is
-setwd("../Data/exdata-data-household_power_consumption")
+##Downloading tha data and using a temp extraction
+fileURL <-"https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
+temp <-tempfile()
+download.file(fileURL, temp)
 
 ## reading the csv file
-dataset <- read.csv(file = "household_power_consumption.txt", sep = ";" , colClasses = "character")
+dataset <- read.csv(file = unz(temp,"household_power_consumption.txt"), sep = ";" , colClasses = "character")
+unlink(temp)
 
 ##Converting first column to usable dates
 dataset$Date <- as.Date(dataset$Date, format = "%d/%m/%Y")
